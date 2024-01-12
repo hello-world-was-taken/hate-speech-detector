@@ -11,6 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from model.chat import Chat
 from repository.chat_repository import ChatRepository
 from db_util import get_db
+from transformers import pipeline
+
 
 app = FastAPI()
 app.add_middleware(
@@ -22,8 +24,8 @@ app.add_middleware(
 
 APP_HOST = os.environ.get("APP_HOST")
 DATABASE_CONNECTION = get_db()
-repository = ChatRepository(DATABASE_CONNECTION)
-
+pipe = pipeline("text-classification", model="NathyB/Hate-Speech-Detection-in-Amharic-Language-mBERT")
+repository = ChatRepository(DATABASE_CONNECTION, pipe)
 
 @app.get("/chats", response_model=list[Chat])
 async def get_all_chats():

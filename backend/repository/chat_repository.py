@@ -9,18 +9,21 @@ The ChatRepository class interacts directly with the database, handling operatio
 """
 
 from model.chat import Chat  # pylint: disable=import-error
+from transformers import pipeline
+
 
 
 class ChatRepository:
     """
     Repository for managing CRUD operations on Chat records in the database.
     """
-    def __init__(self, db_connection):
+    def __init__(self, db_connection, pipe):
         """
         Initialize the repository with a database connection.
         """
         self.db_connection = db_connection
         self.cursor = self.db_connection.cursor()
+        self.pipe = pipe
         self.cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS chats (
@@ -57,6 +60,9 @@ class ChatRepository:
 
         return chats
 
-    # TODO: Should be implemented
     def process_chat(self, text):
+        prediction = self.pipe(text)
+        if prediction['label'] ==  'LABEL_0':
+            return False
         return True
+

@@ -42,7 +42,7 @@ class ChatRepository:
         Create a new chat record in the database.
         """
         self.cursor.execute(
-            "INSERT INTO chats (text, is_hate_speech) VALUES (%s, %s)", (text, is_hate_speech)
+            "INSERT INTO chats (text, is_hate_speech) VALUES (?, ?)", (text, is_hate_speech)
         )
         self.db_connection.commit()
         chat_id = self.cursor.lastrowid
@@ -57,6 +57,7 @@ class ChatRepository:
             Chat(id=row[0], text=row[1], is_hate_speech=row[2])
             for row in self.cursor.fetchall()
         ]
+        self.db_connection.commit()
 
         return chats
 

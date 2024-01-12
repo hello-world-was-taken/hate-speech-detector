@@ -17,9 +17,5 @@ COPY . .
 # Expose the port that FastAPI will run on
 EXPOSE 8000
 
-# Give execution rights to the wait-for-it script
-COPY wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
-
 # Command to run the FastAPI application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

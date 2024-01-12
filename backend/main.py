@@ -15,7 +15,7 @@ from db_util import get_db
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "https://hate-speech-detector-frontend.onrender.com"],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )

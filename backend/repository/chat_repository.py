@@ -63,7 +63,7 @@ class ChatRepository:
 
     def process_chat(self, text):
         prediction = self.pipe(text)
-        if prediction['label'] ==  'LABEL_0':
+        if prediction[0]['label'] ==  'LABEL_0':
             return False
         return True
 
